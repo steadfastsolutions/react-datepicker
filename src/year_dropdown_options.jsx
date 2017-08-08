@@ -22,12 +22,11 @@ export default class YearDropdownOptions extends React.Component {
   constructor (props) {
     super(props)
     const { yearDropdownItemNumber, scrollableYearDropdown } = props
-    const noOfYear = yearDropdownItemNumber || (scrollableYearDropdown ? 10 : 5)
 
     this.state = {
-      yearsList: generateYears(this.props.year, noOfYear)
-    }
-  }
+      yearsList: generateYears(1963, 63)
+    
+}  }
 
   renderOptions = () => {
     var selectedYear = this.props.year

@@ -38741,7 +38741,9 @@
 	    };
 
 	    _this.handleCalendarClickOutside = function (event) {
-	      _this.setOpen(false);
+	      if (!_this.props.inline) {
+	        _this.setOpen(false);
+	      }
 	      _this.props.onClickOutside(event);
 	      if (_this.props.withPortal) {
 	        event.preventDefault();
@@ -38983,6 +38985,15 @@
 	  }
 
 	  _createClass(DatePicker, [{
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(nextProps) {
+	      var currentMonth = this.props.selected && this.props.selected.month();
+	      var nextMonth = nextProps.selected && nextProps.selected.month();
+	      if (this.props.inline && currentMonth !== nextMonth) {
+	        this.setPreSelection(nextProps.selected);
+	      }
+	    }
+	  }, {
 	    key: 'componentWillUnmount',
 	    value: function componentWillUnmount() {
 	      this.clearPreventFocusTimeout();
@@ -55693,12 +55704,11 @@
 	    var yearDropdownItemNumber = props.yearDropdownItemNumber,
 	        scrollableYearDropdown = props.scrollableYearDropdown;
 
-	    var noOfYear = yearDropdownItemNumber || (scrollableYearDropdown ? 10 : 5);
 
 	    _this.state = {
-	      yearsList: generateYears(_this.props.year, noOfYear)
-	    };
-	    return _this;
+	      yearsList: generateYears(1963, 63)
+
+	    };return _this;
 	  }
 
 	  _createClass(YearDropdownOptions, [{
@@ -57734,31 +57744,7 @@
 /* 491 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {/**!
-	 * @fileOverview Kickass library to create and place poppers near their reference elements.
-	 * @version 1.10.8
-	 * @license
-	 * Copyright (c) 2016 Federico Zivolo and contributors
-	 *
-	 * Permission is hereby granted, free of charge, to any person obtaining a copy
-	 * of this software and associated documentation files (the "Software"), to deal
-	 * in the Software without restriction, including without limitation the rights
-	 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-	 * copies of the Software, and to permit persons to whom the Software is
-	 * furnished to do so, subject to the following conditions:
-	 *
-	 * The above copyright notice and this permission notice shall be included in all
-	 * copies or substantial portions of the Software.
-	 *
-	 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-	 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-	 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-	 * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-	 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-	 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-	 * SOFTWARE.
-	 */
-	(function (global, factory) {
+	/* WEBPACK VAR INJECTION */(function(global) {(function (global, factory) {
 		 true ? module.exports = factory() :
 		typeof define === 'function' && define.amd ? define(factory) :
 		(global.Popper = factory());
@@ -58091,62 +58077,7 @@
 	  };
 	}
 
-	var classCallCheck = function (instance, Constructor) {
-	  if (!(instance instanceof Constructor)) {
-	    throw new TypeError("Cannot call a class as a function");
-	  }
-	};
-
-	var createClass = function () {
-	  function defineProperties(target, props) {
-	    for (var i = 0; i < props.length; i++) {
-	      var descriptor = props[i];
-	      descriptor.enumerable = descriptor.enumerable || false;
-	      descriptor.configurable = true;
-	      if ("value" in descriptor) descriptor.writable = true;
-	      Object.defineProperty(target, descriptor.key, descriptor);
-	    }
-	  }
-
-	  return function (Constructor, protoProps, staticProps) {
-	    if (protoProps) defineProperties(Constructor.prototype, protoProps);
-	    if (staticProps) defineProperties(Constructor, staticProps);
-	    return Constructor;
-	  };
-	}();
-
-
-
-
-
-	var defineProperty = function (obj, key, value) {
-	  if (key in obj) {
-	    Object.defineProperty(obj, key, {
-	      value: value,
-	      enumerable: true,
-	      configurable: true,
-	      writable: true
-	    });
-	  } else {
-	    obj[key] = value;
-	  }
-
-	  return obj;
-	};
-
-	var _extends = Object.assign || function (target) {
-	  for (var i = 1; i < arguments.length; i++) {
-	    var source = arguments[i];
-
-	    for (var key in source) {
-	      if (Object.prototype.hasOwnProperty.call(source, key)) {
-	        target[key] = source[key];
-	      }
-	    }
-	  }
-
-	  return target;
-	};
+	var _extends$2 = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 	/**
 	 * Given element offsets, generate an output similar to getBoundingClientRect
@@ -58156,7 +58087,7 @@
 	 * @returns {Object} ClientRect like output
 	 */
 	function getClientRect(offsets) {
-	  return _extends({}, offsets, {
+	  return _extends$2({}, offsets, {
 	    right: offsets.left + offsets.width,
 	    bottom: offsets.top + offsets.height
 	  });
@@ -58360,6 +58291,8 @@
 	  return boundaries;
 	}
 
+	var _extends$1 = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 	function getArea(_ref) {
 	  var width = _ref.width,
 	      height = _ref.height;
@@ -58405,7 +58338,7 @@
 	  };
 
 	  var sortedAreas = Object.keys(rects).map(function (key) {
-	    return _extends({
+	    return _extends$1({
 	      key: key
 	    }, rects[key], {
 	      area: getArea(rects[key])
@@ -58883,6 +58816,8 @@
 	  return options;
 	}
 
+	var _extends$3 = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 	/**
 	 * @function
 	 * @memberof Modifiers
@@ -58970,8 +58905,8 @@
 	  };
 
 	  // Update attributes and styles of `data`
-	  data.attributes = _extends({}, attributes, data.attributes);
-	  data.styles = _extends({}, styles, data.styles);
+	  data.attributes = attributes;
+	  data.styles = _extends$3({}, styles, data.styles);
 
 	  return data;
 	}
@@ -59149,6 +59084,8 @@
 	  return counter ? arr.reverse() : arr;
 	}
 
+	var _extends$4 = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 	var BEHAVIORS = {
 	  FLIP: 'flip',
 	  CLOCKWISE: 'clockwise',
@@ -59237,7 +59174,7 @@
 
 	      // this object contains `position`, we want to preserve it along with
 	      // any additional property we may add in the future
-	      data.offsets.popper = _extends({}, data.offsets.popper, getPopperOffsets(data.instance.popper, data.offsets.reference, data.placement));
+	      data.offsets.popper = _extends$4({}, data.offsets.popper, getPopperOffsets(data.instance.popper, data.offsets.reference, data.placement));
 
 	      data = runModifiers(data.instance.modifiers, data, 'flip');
 	    }
@@ -59387,9 +59324,9 @@
 	      } else {
 	        return a.concat(b);
 	      }
-	    }, [])
+	    }, []
 	    // Here we convert the string values into number values (in px)
-	    .map(function (str) {
+	    ).map(function (str) {
 	      return toValue(str, measurement, popperOffsets, referenceOffsets);
 	    });
 	  });
@@ -59448,6 +59385,10 @@
 	  return data;
 	}
 
+	var _extends$5 = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 	/**
 	 * @function
 	 * @memberof Modifiers
@@ -59477,7 +59418,7 @@
 	      if (popper[placement] < boundaries[placement] && !options.escapeWithReference) {
 	        value = Math.max(popper[placement], boundaries[placement]);
 	      }
-	      return defineProperty({}, placement, value);
+	      return _defineProperty({}, placement, value);
 	    },
 	    secondary: function secondary(placement) {
 	      var mainSide = placement === 'right' ? 'left' : 'top';
@@ -59485,19 +59426,23 @@
 	      if (popper[placement] > boundaries[placement] && !options.escapeWithReference) {
 	        value = Math.min(popper[mainSide], boundaries[placement] - (placement === 'right' ? popper.width : popper.height));
 	      }
-	      return defineProperty({}, mainSide, value);
+	      return _defineProperty({}, mainSide, value);
 	    }
 	  };
 
 	  order.forEach(function (placement) {
 	    var side = ['left', 'top'].indexOf(placement) !== -1 ? 'primary' : 'secondary';
-	    popper = _extends({}, popper, check[side](placement));
+	    popper = _extends$5({}, popper, check[side](placement));
 	  });
 
 	  data.offsets.popper = popper;
 
 	  return data;
 	}
+
+	var _extends$6 = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	function _defineProperty$1(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 	/**
 	 * @function
@@ -59522,11 +59467,11 @@
 	    var measurement = isVertical ? 'width' : 'height';
 
 	    var shiftOffsets = {
-	      start: defineProperty({}, side, reference[side]),
-	      end: defineProperty({}, side, reference[side] + reference[measurement] - popper[measurement])
+	      start: _defineProperty$1({}, side, reference[side]),
+	      end: _defineProperty$1({}, side, reference[side] + reference[measurement] - popper[measurement])
 	    };
 
-	    data.offsets.popper = _extends({}, popper, shiftOffsets[shiftvariation]);
+	    data.offsets.popper = _extends$6({}, popper, shiftOffsets[shiftvariation]);
 	  }
 
 	  return data;
@@ -60007,6 +59952,12 @@
 	 * @param {dataObject} data
 	 */
 
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 	// Utils
 	// Methods
 	var Popper = function () {
@@ -60022,7 +59973,8 @@
 	    var _this = this;
 
 	    var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-	    classCallCheck(this, Popper);
+
+	    _classCallCheck(this, Popper);
 
 	    this.scheduleUpdate = function () {
 	      return requestAnimationFrame(_this.update);
@@ -60056,9 +60008,9 @@
 	      return _extends({
 	        name: name
 	      }, _this.options.modifiers[name]);
-	    })
+	    }
 	    // sort the modifiers by order
-	    .sort(function (a, b) {
+	    ).sort(function (a, b) {
 	      return a.order - b.order;
 	    });
 
@@ -60088,7 +60040,7 @@
 	  // class prototype and break stuff like Sinon stubs
 
 
-	  createClass(Popper, [{
+	  _createClass(Popper, [{
 	    key: 'update',
 	    value: function update$$1() {
 	      return update.call(this);
@@ -60134,6 +60086,7 @@
 	     */
 
 	  }]);
+
 	  return Popper;
 	}();
 
