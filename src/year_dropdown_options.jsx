@@ -24,7 +24,7 @@ export default class YearDropdownOptions extends React.Component {
     const { yearDropdownItemNumber, scrollableYearDropdown } = props
 
     this.state = {
-      yearsList: generateYears(1963, 63)
+      yearsList: generateYears(1959, 59)
     
 }  }
 
